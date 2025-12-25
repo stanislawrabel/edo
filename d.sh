@@ -9,6 +9,13 @@ fi
 
 source "$COMMON_FILE"
 
+# === 🧠 CHECK ARIA2 ===
+if ! command -v aria2c &>/dev/null; then
+  echo -e "${RED}❌ aria2c not installed .${RESET}"
+  echo "👉 Run: pkg install aria2 -y"
+  exit 1
+fi
+
 FINAL_URL="$DOWNLOAD"
 
 if [[ ! "$FINAL_URL" =~ ^https?:// ]]; then
