@@ -1,0 +1,69 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+COMMON_FILE="/storage/emulated/0/Download/DownloadeR/ota_common.txt"
+
+if [[ ! -f "$COMMON_FILE" ]]; then
+  echo "❌ ota_common.txt not found"
+  exit 1
+fi
+
+source "$COMMON_FILE"
+
+FINAL_URL="$DOWNLOAD"
+
+if [[ ! "$FINAL_URL" =~ ^https?:// ]]; then
+  echo "❌ Invalid FINAL_URL"
+  exit 1
+fi
+# === LOAD COMMON ===
+
+
+resolve_zip() {
+  curl -s -I --http1.1 \
+    -H "User-Agent: Dalvik/2.1.0 (Linux; Android 16)" \
+    -H "userId: oplus-ota|16002018" \
+    -H "Accept: */*" \
+    -H "Accept-Encoding: identity" \
+    "$1" \
+  | grep -i '^location:' \
+  | tail -1 \
+  | awk '{print $2}' \
+  | tr -d '\r'
+}
+
+FINAL_URL="$DOWNLOAD"
+
+# === RESOLVE IF NEEDED ===
+if [[ "$FINAL_URL" == *"downloadCheck"* ]]; then
+  echo "🔄 Resolving downloadCheck…"
+  FINAL_URL=$(resolve_zip "$FINAL_URL")
+fi
+
+# === VALIDATION ===
+if [[ -z "$FINAL_URL" || ! "$FINAL_URL" =~ ^https?:// ]]; then
+  echo "❌ Invalid FINAL_URL"
+  exit 1
+fi
+
+echo "📥 Downloading:"
+echo "$FINAL_URL"
+echo "➡️  Saving as: $FINAL_NAME"
+
+
+TARGET_DIR="/storage/emulated/0/Download/DownloadeR"
+TARGET_NAME="${OTA}.zip"
+
+aria2c "$FINAL_URL" -d "$TARGET_DIR" -o "$TARGET_NAME"
+
+# === DOWNLOAD ===
+aria2c \
+  --file-allocation=trunc \
+  --summary-interval=1 \
+  --continue=true \
+  --out="$FINAL_NAME" \
+  --dir="$BASE_DIR" \
+  "$FINAL_URL"
+
+
+
+echo "✅ Done: $FINAL_PATH"
