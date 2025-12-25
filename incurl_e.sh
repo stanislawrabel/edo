@@ -20,9 +20,9 @@ pip3 install --upgrade requests pycryptodome git+https://github.com/R0rt1z2/real
 echo "📥 Downloading scripts and data files..."
 REPO="https://raw.githubusercontent.com/stanislawrabel/edo/main"
 
-curl -sSL "$REPO e.sh" -o e.sh
-curl -sSL "$REPO/models.txt" -o models.txt
-curl -sSL "$REPO/devices.txt" -o devices.txt
+curl -fsSL "$REPO/e.sh" -o e.sh
+curl -fsSL "$REPO/models.txt" -o models.txt
+curl -fsSL "$REPO/devices.txt" -o devices.txt
 
 chmod +x e.sh
 
