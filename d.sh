@@ -23,7 +23,9 @@ if [[ ! "$FINAL_URL" =~ ^https?:// ]]; then
   exit 1
 fi
 # === LOAD COMMON ===
-
+fix_old_zip() {
+  echo "$1" | sed 's/gauss-componentotamanual/gauss-opexcostmanual-eu/'
+}
 
 resolve_zip() {
   curl -s -I --http1.1 \
@@ -62,15 +64,13 @@ TARGET_NAME="${OTA}.zip"
 
 aria2c "$FINAL_URL" -d "$TARGET_DIR" -o "$TARGET_NAME"
 
-# === DOWNLOAD ===
-aria2c \
-  --file-allocation=trunc \
-  --summary-interval=1 \
-  --continue=true \
-  --out="$FINAL_NAME" \
-  --dir="$BASE_DIR" \
-  "$FINAL_URL"
+FINAL_PATH="$TARGET_DIR/$TARGET_NAME"
 
-
+if [[ -n "$MD5" && -f "$FINAL_PATH" ]]; then
+  echo "🔐 Verifying MD5..."
+  echo "$MD5  $FINAL_PATH" | md5sum -c -
+else
+  echo "⚠️ MD5 skipped (missing hash or file)"
+fi
 
 echo "✅ Done: $FINAL_PATH"
