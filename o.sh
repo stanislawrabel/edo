@@ -81,6 +81,12 @@ resolve_zip() {
   | awk '{print $2}' \
   | tr -d '\r'
 }
+fix_old_zip() {
+  local url="$1"
+
+  echo "$url" | sed \
+    -e 's|gauss-componentotamanual.allawnofs.com|gauss-opexcostmanual-eu.allawnofs.com|'
+}
 
 
 # 📌 Funkcia na spracovanie OTA
