@@ -265,8 +265,6 @@ device_name="${MODEL_NAMES[$clean_model]:-Unknown}"
 
 printf "| ${RED}%-3s${RESET} | ${GREEN}%-30s${RESET} |\n" "$index" "$device_name" 
     done
-
-    echo -e "+-----+--------------------------------+"
   echo -e "${GREEN}+======================================+${RESET}"
 
   read -p "🔢 Select device number: " selected
