@@ -151,7 +151,15 @@ echo -e
 
     download_link=$(echo "$output" | grep -o 'http[s]*://[^"]*' | head -n 1 | sed 's/["\r\n]*$//')
    modified_link=$(echo "$download_link" | sed 's/componentotamanual/componentotamanual/g')       
+   
 fixed_zip=$(fix_old_zip "$download_link")
+
+if [[ "$download_link" == *"downloadCheck"* ]]; then
+  resolved_zip=$(resolve_zip "$download_link")
+else
+  resolved_zip="$fixed_zip"
+fi
+
 FINAL_ZIP_URL="$download_link"
 
 if [[ "$download_link" == *"downloadCheck"* ]]; then
