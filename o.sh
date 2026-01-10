@@ -189,6 +189,7 @@ ${GREEN}$modified_link${RESET}"
 
 if [[ -n "$FINAL_ZIP_URL" ]]; then
   echo -e "    📥 Resolved link:\n${GREEN}$FINAL_ZIP_URL${RESET}"
+  fixed_zip=$(fix_old_zip "$download_link")
 else
   echo "❌ No download link found."
 fi
