@@ -151,13 +151,13 @@ echo -e
 
     download_link=$(echo "$output" | grep -o 'http[s]*://[^"]*' | head -n 1 | sed 's/["\r\n]*$//')
    modified_link=$(echo "$download_link" | sed 's/componentotamanual/componentotamanual/g')       
-
+fixed_zip=$(fix_old_zip "$download_link")
 FINAL_ZIP_URL="$download_link"
 
 if [[ "$download_link" == *"downloadCheck"* ]]; then
     FINAL_ZIP_URL=$(resolve_zip "$download_link")
 fi
-fixed_zip=$(fix_old_zip "$download_link")
+
 
 OUT="/storage/emulated/0/Download/DownloadeR/ota_common.txt"
 
@@ -188,10 +188,9 @@ ${GREEN}$modified_link${RESET}"
    fi
 
 if [[ -n "$FINAL_ZIP_URL" ]]; then
-#  echo -e "    📥 Resolved link:\n${GREEN}$FINAL_ZIP_URL${RESET}"
-  fixed_zip=$(fix_old_zip "$download_link")
+  echo -e "    📥 Resolved link:\n${GREEN}$FINAL_ZIP_URL${RESET}"
 else
-#  echo "❌ No download link found."
+  echo "❌ No download link found."
 fi
     echo "$ota_version_full" >> "ota_${device_model}.txt"
     echo "$modified_link" >> "ota_${device_model}.txt"
