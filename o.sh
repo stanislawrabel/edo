@@ -157,6 +157,8 @@ FINAL_ZIP_URL="$download_link"
 if [[ "$download_link" == *"downloadCheck"* ]]; then
     FINAL_ZIP_URL=$(resolve_zip "$download_link")
 fi
+fixed_zip=$(fix_old_zip "$download_link")
+
 OUT="/storage/emulated/0/Download/DownloadeR/ota_common.txt"
 
 mkdir -p "$(dirname "$OUT")"
