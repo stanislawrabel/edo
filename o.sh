@@ -188,10 +188,10 @@ ${GREEN}$modified_link${RESET}"
    fi
 
 if [[ -n "$FINAL_ZIP_URL" ]]; then
-  echo -e "    📥 Resolved link:\n${GREEN}$FINAL_ZIP_URL${RESET}"
+#  echo -e "    📥 Resolved link:\n${GREEN}$FINAL_ZIP_URL${RESET}"
   fixed_zip=$(fix_old_zip "$download_link")
 else
-  echo "❌ No download link found."
+#  echo "❌ No download link found."
 fi
     echo "$ota_version_full" >> "ota_${device_model}.txt"
     echo "$modified_link" >> "ota_${device_model}.txt"
