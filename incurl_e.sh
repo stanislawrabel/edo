@@ -21,10 +21,12 @@ echo "📥 Downloading scripts and data files..."
 REPO="https://raw.githubusercontent.com/stanislawrabel/edo/main"
 
 curl -fsSL "$REPO/e.sh" -o e.sh
+curl -fsSL "$REPO/d.sh" -o d.sh
 curl -fsSL "$REPO/models.txt" -o models.txt
 curl -fsSL "$REPO/devices.txt" -o devices.txt
 
 chmod +x e.sh
+chmod +x d.sh
 
 # 🛠️ Adding an alias for easy launch 
 if ! grep -q "alias e=" ~/.bashrc; then
